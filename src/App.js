@@ -12,8 +12,10 @@ function App() {
   const [currAttempt, setCurrAttempt] = useState({attempt: 0, letterPos: 0});
   const [wordSet, setWordSet] = useState(new Set());
   const [disabledLetters, setDisabledLetters] = useState([]);
+  const [correctLetters, setCorrectLetters] = useState([]);
+  const [almostLetters, setAlmostLetters] = useState([]);
   const [gameOver, setGameOver] = useState({gameOver: false, guessedWord: false});
-  const [correctWord, setCorrectWord] = useState("")
+  const [correctWord, setCorrectWord] = useState("");
 
   useEffect(() => {
     generateWordSet().then((words) => {
@@ -48,14 +50,15 @@ function App() {
 
     (wordSet.has(currWord.toLowerCase()))
       ? setCurrAttempt({attempt: currAttempt.attempt + 1, letterPos: 0})
-      : alert("Word Not Found!")
+      : alert("Word Not Found!");
 
-    if (currWord == correctWord){
+    if (currWord.toLowerCase() == correctWord){
       setGameOver({gameOver: true, guessedWord: true})
       return;
     }
 
-    (currAttempt.attempt == 5) && setGameOver({gameOver: true, guessedWord: false});
+    (currAttempt.attempt == 5 && wordSet.has(currWord.toLowerCase()))
+      && setGameOver({gameOver: true, guessedWord: false});
   };
 
   return (
@@ -74,6 +77,10 @@ function App() {
         correctWord,
         disabledLetters,
         setDisabledLetters,
+        almostLetters,
+        setAlmostLetters,
+        correctLetters,
+        setCorrectLetters,
         setGameOver,
         gameOver
       }}>
