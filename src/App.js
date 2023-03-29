@@ -35,7 +35,7 @@ function App() {
   
   // when player clicks DELETE/Backspace
   const onDelete = () => {
-    if (currAttempt.letterPos == 0) return; // there's no letter in the attempt yet
+    if (currAttempt.letterPos === 0) return; // there's no letter in the attempt yet
     const newBoard = [...board]; // make change to board on each click
     newBoard[currAttempt.attempt][currAttempt.letterPos - 1] = ""; // clear letter behind
     setBoard(newBoard);
@@ -44,7 +44,7 @@ function App() {
 
   // when player clicks ENTER
   const onEnter = () => {
-    if (currAttempt.letterPos != 5) return; // if attempt not yet complete
+    if (currAttempt.letterPos !== 5) return; // if attempt not yet complete
 
     let currWord = "";
     for (let i = 0; i < 5; i++){
@@ -55,12 +55,12 @@ function App() {
       ? setCurrAttempt({attempt: currAttempt.attempt + 1, letterPos: 0}) // if yes, move on to next attempt
       : alert("Word Not Found!"); // otherwise alert
 
-    if (currWord.toLowerCase() == correctWord){
+    if (currWord.toLowerCase() === correctWord){
       setGameOver({gameOver: true, guessedWord: true})
       return;
     }
 
-    (currAttempt.attempt == 5 && wordSet.has(currWord.toLowerCase())) // if last attempt is wrong
+    (currAttempt.attempt === 5 && wordSet.has(currWord.toLowerCase())) // if last attempt is wrong
       && setGameOver({gameOver: true, guessedWord: false});
   };
 
