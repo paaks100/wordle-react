@@ -5,24 +5,36 @@ import Key from './Key';
 function Keyboard() {
     const {
         onEnter,
-        onDelete,onSelectLetter, disabledLetters, correctLetters, almostLetters } = useContext(AppContext);
+        onDelete,
+        onSelectLetter,
+        disabledLetters,
+        correctLetters,
+        almostLetters
+    } = useContext(AppContext);
 
-    const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
-    const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
-    const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
+    const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]; // top row keys
+    const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];  // middle row keys
+    const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];  // bottom row keys
 
+    // when player clicks on actual keyboard
     const handleKeyboard = useCallback((event) => {
-        if (event.key == "Enter"){
+        if (event.key == "Enter"){ // if player clicks the ENTER key
             onEnter();
-        } else if (event.key == "Backspace"){
+        } else if (event.key == "Backspace"){ // if player clicks the DELETE key
             onDelete();
         } else {
-            keys1.forEach((key) => (event.key.toLowerCase() == key.toLowerCase() && onSelectLetter(key)));
-            keys2.forEach((key) => (event.key.toLowerCase() == key.toLowerCase() && onSelectLetter(key)));
-            keys3.forEach((key) => (event.key.toLowerCase() == key.toLowerCase() && onSelectLetter(key)));
+            keys1.forEach((key) => // if player clicks a top row key
+                (event.key.toLowerCase() == key.toLowerCase()&& onSelectLetter(key)));
+
+            keys2.forEach((key) => // if player clicks a middle row key
+                (event.key.toLowerCase() == key.toLowerCase() && onSelectLetter(key)));
+
+            keys3.forEach((key) => // if player clicks a bottom row key
+                (event.key.toLowerCase() == key.toLowerCase() && onSelectLetter(key)));
         }
     })
 
+    // called to handle the handleKeyboard() function
     useEffect(() => {
         document.addEventListener("keydown", handleKeyboard);
         return () => {

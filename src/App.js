@@ -24,40 +24,43 @@ function App() {
     });
   }, []);
 
+  // when player clicks a letter
   const onSelectLetter = (keyVal) => {
-    if (currAttempt.letterPos > 4) return;
-    const newBoard = [...board];
-    newBoard[currAttempt.attempt][currAttempt.letterPos] = keyVal;
+    if (currAttempt.letterPos > 4) return; // if last letter of current attempt has been filled
+    const newBoard = [...board]; // make change to board on each click
+    newBoard[currAttempt.attempt][currAttempt.letterPos] = keyVal; // set value at that position to keyVal
     setBoard(newBoard);
-    setCurrAttempt({...currAttempt, letterPos: currAttempt.letterPos + 1})
+    setCurrAttempt({...currAttempt, letterPos: currAttempt.letterPos + 1}) // move to next letter
   }
   
+  // when player clicks DELETE/Backspace
   const onDelete = () => {
-    if (currAttempt.letterPos == 0) return;
-    const newBoard = [...board];
-    newBoard[currAttempt.attempt][currAttempt.letterPos - 1] = "";
+    if (currAttempt.letterPos == 0) return; // there's no letter in the attempt yet
+    const newBoard = [...board]; // make change to board on each click
+    newBoard[currAttempt.attempt][currAttempt.letterPos - 1] = ""; // clear letter behind
     setBoard(newBoard);
-    setCurrAttempt({...currAttempt, letterPos: currAttempt.letterPos - 1})
+    setCurrAttempt({...currAttempt, letterPos: currAttempt.letterPos - 1}) // move back by 1
   }
 
+  // when player clicks ENTER
   const onEnter = () => {
-    if (currAttempt.letterPos != 5) return;
+    if (currAttempt.letterPos != 5) return; // if attempt not yet complete
 
     let currWord = "";
     for (let i = 0; i < 5; i++){
-      currWord += board[currAttempt.attempt][i];
+      currWord += board[currAttempt.attempt][i]; // append letters to currWord
     }
 
-    (wordSet.has(currWord.toLowerCase()))
-      ? setCurrAttempt({attempt: currAttempt.attempt + 1, letterPos: 0})
-      : alert("Word Not Found!");
+    (wordSet.has(currWord.toLowerCase())) // does wordSet contain currWord?
+      ? setCurrAttempt({attempt: currAttempt.attempt + 1, letterPos: 0}) // if yes, move on to next attempt
+      : alert("Word Not Found!"); // otherwise alert
 
     if (currWord.toLowerCase() == correctWord){
       setGameOver({gameOver: true, guessedWord: true})
       return;
     }
 
-    (currAttempt.attempt == 5 && wordSet.has(currWord.toLowerCase()))
+    (currAttempt.attempt == 5 && wordSet.has(currWord.toLowerCase())) // if last attempt is wrong
       && setGameOver({gameOver: true, guessedWord: false});
   };
 

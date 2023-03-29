@@ -19,13 +19,13 @@ function Letter({letterPos, attemptVal}) {
         && (correct ? "correct" : almost ? "almost" : "error");
 
     useEffect(() => {
-        if (letter != "" && !correct && !almost){
+        if (letter != "" && !correct && !almost){ // if letter not in correct word
             setDisabledLetters((prev) => [...prev, letter])
         }
-        if (letter != "" && almost){
+        if (letter != "" && almost){ // if letter in correct word but wrong position
             setAlmostLetters((prev) => [...prev, letter])
         }
-        if (letter != "" && correct){
+        if (letter != "" && correct){ // if letter in correct position
             setCorrectLetters((prev) => [...prev, letter])
         }
     }, [currAttempt.attempt])

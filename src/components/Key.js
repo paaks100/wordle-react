@@ -5,14 +5,15 @@ function Key({keyVal, bigKey, disabled, correct, almost}) {
     const { onSelectLetter, onDelete, onEnter } = useContext(AppContext);
 
     const selectLetter = () => {
-        if (keyVal == "ENTER"){
+        if (keyVal == "ENTER"){ // if player clicks the ENTER key
             onEnter()
-        } else if (keyVal == "DELETE"){
+        } else if (keyVal == "DELETE"){ // if player clicks the DELETE key
             onDelete()
         } else {
             onSelectLetter(keyVal)
         }
     }
+
     return (
         <div
             className='key'
