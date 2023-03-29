@@ -1,4 +1,4 @@
-import wordBank from "./"
+import wordBank from "./wordle-bank.txt"
 
 export const boardDefault = [
     ["", "", "", "", ""],
@@ -9,7 +9,16 @@ export const boardDefault = [
     ["", "", "", "", ""]
 ];
 
-const generateWordSet = async () => {
+export const generateWordSet = async () => {
     let wordSet;
-    await fetch()
-}
+    let todaysWord;
+    await fetch(wordBank)
+        .then((response) => response.text())
+        .then((result) => {
+            const wordArr = result.split("\r\n");
+            todaysWord = wordArr[Math.floor(Math.random() * wordArr.length)]
+            wordSet = new Set(wordArr)
+        });
+
+    return { wordSet, todaysWord };
+};
